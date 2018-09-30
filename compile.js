@@ -34,4 +34,6 @@ if (distFolders.indexOf(folder) === -1) {
   fs.mkdirSync(distScenePath);
 }
 
-fs.writeFileSync(path.join(distScenePath, 'index.html'), Hb.compile(template)(data)); 
+fs.copyFileSync(path.join(__dirname, 'src', folder, 'script.js'),path.join(distScenePath, 'script.js'));
+fs.copyFileSync(path.join(__dirname, 'src', folder, 'style.css'),path.join(distScenePath, 'style.css'));
+fs.writeFileSync(path.join(distScenePath, 'index.html'), Hb.compile(template)(data));
