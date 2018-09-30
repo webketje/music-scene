@@ -1,12 +1,12 @@
 {
-  "name": "sc-playlist",
+  "name": "music-scene",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of musico-visual experience scenes",
   "main": "compile.js",
   "scripts": {
     "compile": "node compile"
   },
-  "author": "",
+  "author": "webketje (Kevin Van Lierde)",
   "license": "ISC",
   "dependencies": {
     "handlebars": "^4.0.12"

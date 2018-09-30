@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {{# with meta}}
+    <meta name="description" content="{{{description}}}">
+    <meta name="keywords" content="{{{keywords}}}">
+    <title>{{ ../scene.title }} | {{ title }}</title>
+    {{/ with}}
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+  </head>
+  <body>
+    <div id="overlay">
+      <h1>{{ scene.title }}</h1>
+      <div id="widget">
+        <div id="track-list">
+          {{# each tracks as |track| }}
+          <div class="track"
+            data-id="{{track.id}}"
+            data-animation="{{ track.animation }}"
+            data-animfrequency="{{ track.animfrequency }}"
+            itemscope itemprop="track" itemtype="http://schema.org/MusicRecording">
+            <meta itemprop="byArtist" content="{{ track.artist }}">
+            <meta itemprop="name" content="{{ track.title }}">
+            <a class="track__number"
+              href="#track-{{ track.id }}"
+              title="{{ track.artist }} - {{ track.title }}"
+              disabled>{{ track.index }}</a>
+            <div class="track__embed track__embed--loading">
+              <iframe itemprop="audio"
+                scrolling="no" frameborder="no" allow="autoplay" class="sc-embed"
+                width="{{ ../iframe.width }}" 
+                height="{{ ../iframe.height }}"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{track.id}}&{{{querystring ../soundcloud}}}"></iframe>
+            </div>
+          </div>
+          {{/ each }}
+        </div>
+      </div>
+    </div>
+    </footer>
+    <figure id="svg">
+      {{{ svg }}}
+      {{# with scene}}
+      <figcaption>
+        <a href="{{{image.url}}}">{{ image.title }} by {{ image.author }}</a>
+      </figcaption>
+      {{/ with}}
+    </figure>
+    <script src="script.js"></script>
+  </body>
+</html>
