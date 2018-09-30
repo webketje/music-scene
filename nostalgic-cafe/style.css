@@ -1,0 +1,171 @@
+html, body, #overlay, #svg {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+* { box-sizing: border-box; }
+body {
+  overflow: hidden;
+  font: 16px Arial, Helvetica, sans-serif;
+}
+#bg {
+  z-index: -1;
+}
+#overlay {
+  z-index: 1;
+}
+#bg, #overlay, #svg, #svg figcaption, .track__embed {
+  position: absolute;
+}
+.hidden { display: none; }
+
+#svg figcaption {
+  bottom: 10px;
+  right: 100px;
+}
+#svg figcaption a, #svg figcaption a:link {
+  color: #FBFBC0;
+  text-shadow: 0 0  5px #422338;
+}
+#overlay {
+  height: calc(100% - 100px);
+  margin-bottom: 100px; 
+}
+#widget {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: calc(100% - 100px);
+  width: 100%;
+}
+#track {
+  box-shadow: 0 0 20px #422338;
+  
+}
+#track-list {
+  width: 500px;
+  position: relative;
+}
+.track {
+  background: rgb(66, 35, 56);
+  height: 51px;
+  float: left;
+  display: flex;
+  min-width: 51px;
+  border: 1px solid #d2d2d2;
+  margin-right: -1px;
+  margin-bottom: -1px;
+  font-weight: bold;
+  overflow: hidden;
+}
+.track:hover {
+  z-index: 20;
+  overflow: visible;
+}
+.track:hover .track__embed {
+  z-index: 20;
+}
+.track--active {
+  background-color: #693859;
+}
+
+.track__embed.track__embed--loading iframe {
+  display: none;
+}
+.track__number {
+  text-align: center;
+  cursor: pointer;
+  line-height: 50px;
+  width: 100%;
+  display: block;
+  color: #FBFBC0;
+  text-decoration: none;
+}
+.track__number[disabled] {
+  color: #693859;
+}
+
+.track__info {
+  line-height: 25px;
+  background: rgb(66, 35, 56);
+  color: #FBFBC0;
+  font-weight: normal;
+  padding-left: 10px;
+  opacity: 0;
+  transition: .3s opacity;
+  white-space: nowrap;
+}
+
+.track__embed {
+  top: 100%;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  background: white;
+  border: 1px solid white;
+}
+.track:hover .track__embed, .track.track--active .track__embed {
+  opacity: 1;
+  visibility: visible;
+}
+
+h1 {
+  font-family: Indie Flower;
+  margin-top: 50px;
+  margin-bottom: -155px;
+  font-size: 84px;
+  color: #FBFBC0;
+  text-shadow: 5px 5px 10px #422338;
+  text-align: center;
+  /*line-height: 50px;
+  border-bottom: 18px double #FBFBC0;*/
+}
+svg {
+  position: absolute;
+  z-index: -1;
+}
+
+@media screen and (min-width: 1440px) {
+  svg {
+    top: -10%;
+  }
+}
+@media screen and (min-width: 1600px) {
+  svg {
+    top: -20%;
+  }
+}
+@media screen and (min-width: 1850px) {
+  svg {
+    top: -25%;
+  }
+}
+@media screen and (max-width: 1024px) {
+  svg {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  svg {
+    left: -5%;
+  }
+}
+@media screen and (max-width: 832px) {
+  svg {
+    left: -20%;
+  }
+}
+@media screen and (max-width: 640px) {
+  svg {
+    left: -50%;
+  }
+}
+.halo {
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+.halo.hidden { display: initial; opacity: 0; }
