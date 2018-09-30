@@ -160,6 +160,7 @@ Object.defineProperties(playlist, {
         frequency: parseInt(element.dataset.animfrequency),
         type: element.dataset.animation
       },
+      element: element,
       play: function() { widget.play(); },
       pause: function() { widget.pause(); },
       on: function(evt, fn) { widget.bind(SC.Widget.Events[evt], fn); },
@@ -241,6 +242,32 @@ Object.defineProperties(playlist, {
         playlist.activeTrack = playlist.track(0);
     },
 
+    findNearestMultipleOf50: function(winWidth) {
+      var x = 0;
+      while (x < winWidth - 50) {
+        x = x + 50;
+      }
+      return x;
+    },
+
+    resizeTrackList: function() {
+      var winWidth = window.innerWidth
+        , trackList = document.getElementById('track-list')
+        , self = this;
+      
+      if (winWidth < 500) {
+        trackList.style.width = self.findNearestMultipleOf50(winWidth) + 2 + 'px';
+        foreach(playlist.tracks, function(t) {
+          t.element.getElementsByTagName('iframe')[0].width = self.findNearestMultipleOf50(winWidth) - 1;
+        });
+      } else {
+        trackList.style.width = '500px';
+        foreach(playlist.tracks, function(t) {
+          t.element.getElementsByTagName('iframe')[0].width = 499;
+        });
+      }
+    },
+
     init: function() {
       var halos = document.getElementsByTagName('svg')[0].getElementsByClassName('halo');
       var trackElements = document.getElementsByClassName('track');
@@ -254,7 +281,6 @@ Object.defineProperties(playlist, {
           playlist.activeTrack = track;
           if (!animated) {
             animation.interval = setInterval(function() {
-              console.log(playlist.activeTrack.animation.type)
               animation[playlist.activeTrack.animation.type || 'inarow'](halos);
             }, playlist.activeTrack.animation.frequency || 500);
             animated = true;
@@ -276,6 +302,16 @@ Object.defineProperties(playlist, {
       });
 
       this.setInitialTrack();
+      if (window.innerWidth < 500)
+        this.resizeTrackList();
+
+      var resizeTimeout, self = this;
+      window.addEventListener('resize', function() {
+        self.resizeTrackList();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+        }, 200);
+      });
     }
   }
 }(SC));
