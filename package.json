@@ -1,0 +1,14 @@
+{
+  "name": "sc-playlist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compile.js",
+  "scripts": {
+    "compile": "node compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.0.12"
+  }
+}
