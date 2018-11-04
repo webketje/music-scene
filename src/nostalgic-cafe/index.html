@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="../lib/animated-textblock.js"></script>
   </head>
   <body>
     <div id="overlay">
@@ -36,6 +37,13 @@
                 height="{{ ../iframe.height }}"
                 src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{track.id}}&{{{querystring ../soundcloud}}}"></iframe>
             </div>
+            {{# if track.text }}
+            <div class="texts">
+              {{# each track.text }}
+              <div data-t="{{t}}" data-duration="{{d}}" class="textbox textbox--hidden">{{{content}}}</div>
+              {{/ each }}
+            </div>
+            {{/ if }}
           </div>
           {{/ each }}
         </div>
