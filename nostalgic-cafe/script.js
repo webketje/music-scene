@@ -7,6 +7,9 @@ var app = (function(SC) {
   function filter(context, fn) {
     return Array.prototype.filter.call(context, fn);
   }
+  function map(context, fn) {
+    return Array.prototype.map.call(context, fn);
+  }
   function hide(el) {
     var baseAttr = el.getAttribute('class').replace(' hidden', '');
     el.setAttribute('class',  baseAttr + ' hidden');
@@ -65,6 +68,37 @@ var app = (function(SC) {
     }()),
     interval: null
   };
+
+  var Timer = function(t) {
+    var timeout;
+    var instance = {
+      onend: function() {},
+      valueOf: t
+    }
+    instance.start = function() {
+      timeout = setTimeout(instance.onend, t);
+    }
+    instance.end = function() {
+      clearTimeout(timeout);
+      instance.onend();
+    }
+    return instance;
+  }
+
+  var interval = function(dur) {
+    var i = null;
+    dur = dur || 1000;
+
+    return {
+      start: function(dur) {
+        i = setInterval(function() {
+        }, dur)
+      },
+      stop: function() {
+        clearInterval(i);
+      }
+    }
+  }
 
   var playlist = {
     activeTrack: null,
@@ -161,6 +195,14 @@ Object.defineProperties(playlist, {
         type: element.dataset.animation
       },
       element: element,
+      texts: (function() {
+        var texts = element.getElementsByClassName('textbox');
+        return texts.length ? map(texts, function(el) {
+          var x = textbox(el);
+          x.timer = parseInt(el.dataset.t) * 1000;
+          return x;
+        }) : [];
+      }()),
       play: function() { widget.play(); },
       pause: function() { widget.pause(); },
       on: function(evt, fn) { widget.bind(SC.Widget.Events[evt], fn); },
@@ -211,9 +253,21 @@ Object.defineProperties(playlist, {
         }
       }
     });
-
-    t.on('PAUSE', function() { x = false; });
-    t.on('PLAY' , function() { x = true; });
+    var intv = null
+    t.on('PAUSE', function() {
+      x = false;
+      clearInterval(intv)
+    });
+    t.on('PLAY' , function() {
+      x = true;
+      intv = setInterval(function() {
+        foreach(t.texts, function(text) {
+          if (text.timer === Math.round(t.position / 1000) * 1000) {
+            text.animate()
+          }
+        })
+      }, 1000);
+    });
     t.on('READY', function() {
       embed.classList.remove('track__embed--loading');
       btn.removeAttribute('disabled');
