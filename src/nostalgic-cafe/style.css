@@ -168,13 +168,15 @@ svg {
 /* textbox */
 .textbox {
   position: fixed;
-  bottom: 150px; 
+  bottom: 150px;
+  left: calc(50% - 160px);
+  width: 320px;
   background: rgba(255,255,255, 0.8);
   padding: 10px 20px;
   border-radius: 10px;
-  white-space: pre;
-  font-size: 32px;
-  line-height: 0.9;
+  white-space: pre-line;
+  font-size: 30px;
+  line-height: 1;
   font-family: Indie Flower;
   font-weight: normal;
   z-index: 999;
